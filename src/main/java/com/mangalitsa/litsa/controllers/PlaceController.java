@@ -1,6 +1,6 @@
-package com.mangalitsa.litsa.controller;
+package com.mangalitsa.litsa.controllers;
 
-import com.mangalitsa.litsa.controller.model.PlaceResponse;
+import com.mangalitsa.litsa.controllers.model.PlaceResponse;
 import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

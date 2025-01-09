@@ -1,6 +1,7 @@
 package com.mangalitsa.litsa.controller;
 
-import com.mangalitsa.litsa.controller.model.PlaceResponse;
+import com.mangalitsa.litsa.controllers.model.PlaceResponse;
+import com.mangalitsa.litsa.controllers.PlaceController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
