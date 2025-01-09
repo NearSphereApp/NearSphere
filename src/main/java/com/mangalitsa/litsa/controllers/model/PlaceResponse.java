@@ -1,4 +1,4 @@
-package com.mangalitsa.litsa.controller.model;
+package com.mangalitsa.litsa.controllers.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
