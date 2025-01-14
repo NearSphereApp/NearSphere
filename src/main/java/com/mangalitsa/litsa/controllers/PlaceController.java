@@ -1,14 +1,12 @@
 package com.mangalitsa.litsa.controllers;
 
+import com.mangalitsa.litsa.controllers.dto.PlaceApiResponse;
 import com.mangalitsa.litsa.controllers.dto.PlacesApiResponse;
 import com.mangalitsa.litsa.controllers.dto.PlacesRequest;
 import com.mangalitsa.litsa.services.PlacesService;
 import com.mangalitsa.litsa.util.KeywordMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -51,6 +49,10 @@ public class PlaceController {
 
 
         return placesService.getNearbyPlaces(requestDto);
+    }
+    @GetMapping("/{id}")
+    public PlaceApiResponse getPlaceDetails(@PathVariable("id") String placeId) {
+        return placesService.getPlaceDetails(placeId);
     }
 
 }
