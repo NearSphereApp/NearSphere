@@ -50,9 +50,5 @@ public class PlaceController {
 
         return placesService.getNearbyPlaces(requestDto);
     }
-//    @GetMapping("/{id}")
-//    public PlaceApiResponse getPlaceDetails(@PathVariable("id") String placeId) {
-//        return placesService.getPlaceDetails(placeId);
-//    }
 
 }
