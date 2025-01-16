@@ -30,7 +30,7 @@ public class RequestBody {
             }
             sb.append("],");
         }
-
+        sb.append("\"maxResultCount\":").append("20,");
         sb.append("\"locationRestriction\":{")
                 .append("\"circle\":{")
                 .append("\"center\":{")
