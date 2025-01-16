@@ -52,18 +52,37 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 
     @Override
     public void confirmResetPassword(ConfirmPasswordResetRequest request) {
-        User user = userRepository.findByEmail(request.email()).orElseThrow();
+        User user = userRepository.findByEmail(request.email())
+                .orElseThrow(() -> new RuntimeException("User not found!"));
 
         Optional<PasswordResetToken> optionalToken = passwordResetTokenRepository.findByUser(user);
 
         if (optionalToken.isEmpty()) {
-            throw new RuntimeException("Token could not find!");
+            throw new RuntimeException("Token not found!");
         } else {
             PasswordResetToken passwordResetToken = optionalToken.get();
+
+            // Additional validations:
+            // 1. Check for expiration
+            // 2. Ensure token has not been used previously
+
             if (passwordResetToken.getResetToken().equals(request.token())) {
+                // For security, consider validating expiration and whether the token has already been used
+                if (passwordResetToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+                    throw new RuntimeException("Token expired!");
+                }
+                if (passwordResetToken.getUsed()) {
+                    throw new RuntimeException("Token already used!");
+                }
+
                 Password userPassword = passwordRepository.findByUser(user);
-                userPassword.setPasswordHash(request.password()); //Todo : use passwordHash
+                // Todo: perform proper password hashing/encoding before saving!
+                userPassword.setPasswordHash(request.password());
                 passwordRepository.save(userPassword);
+
+                // Mark token as used
+                passwordResetToken.setUsed(true);
+                passwordResetTokenRepository.save(passwordResetToken);
             }
         }
     }

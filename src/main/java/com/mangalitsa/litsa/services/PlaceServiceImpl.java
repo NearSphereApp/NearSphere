@@ -34,12 +34,12 @@ public class PlaceServiceImpl implements PlaceService {
 
 
     @Override
+
     public List<PlacesResponse> getNearbyPlaces(PlacesRequest placesRequest) {
         String request = requestBody.buildRequestBody(placesRequest);
 
-
         PlacesApiResponse response = webClient.post()
-               .uri(UriBuilder::build)
+                .uri(UriBuilder::build)
                 .header("Content-Type", "application/json")
                 .header("X-Goog-Api-Key", apiKey)
                 .header("X-Goog-FieldMask", "places.displayName,places.id,places.formattedAddress," +
@@ -48,15 +48,29 @@ public class PlaceServiceImpl implements PlaceService {
                 .retrieve()
                 .bodyToMono(PlacesApiResponse.class)
                 .block();
+
         List<PlacesResponse> placesForEndpoint = new ArrayList<>();
-        for(Place place : response.getPlaces()) {
-            placesForEndpoint.add(new PlacesResponse(place.getId(),place.getDisplayName().getText(),
-                    place.getPhotos().getFirst().getGoogleMapsUri(),
-                    place.getFormattedAddress(),place.getWebsiteUri(),place.getPriceLevel(),place.getTypes()));
+        assert response != null;
+        for (Place place : response.getPlaces()) {
+            String photoUri = null;
+            if (place.getPhotos() != null && !place.getPhotos().isEmpty()) {
+                photoUri = place.getPhotos().get(0).getGoogleMapsUri();
+            }
+            PlacesResponse placesResponse = new PlacesResponse(
+                    place.getId(),
+                    place.getDisplayName().getText(),
+                    photoUri,
+                    place.getFormattedAddress(),
+                    place.getWebsiteUri(),
+                    place.getPriceLevel(),
+                    place.getTypes()
+            );
+            placesForEndpoint.add(placesResponse);
         }
 
         return placesForEndpoint;
     }
+
 
     @Override
     public PlacesResponse getPlaceDetails(String placeId) {
