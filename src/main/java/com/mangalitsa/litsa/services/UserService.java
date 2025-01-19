@@ -13,6 +13,6 @@ public interface UserService {
 
     void signUp(NewUserRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException;
 
-    void updateInfo(Long id ,ChangeUserInfoRequest request);
+    void updateInfo(Long id ,ChangeUserInfoRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException;
 }
 

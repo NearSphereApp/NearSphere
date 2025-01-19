@@ -11,7 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateUserInfo(@PathVariable Long id , @RequestBody ChangeUserInfoRequest request){
+    public ResponseEntity<Void> updateUserInfo(@PathVariable Long id , @RequestBody ChangeUserInfoRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException {
         userService.updateInfo(id , request);
         return ResponseEntity.ok().build();
     }

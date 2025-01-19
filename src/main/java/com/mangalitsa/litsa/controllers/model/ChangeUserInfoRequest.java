@@ -4,5 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record ChangeUserInfoRequest(
         @JsonProperty(value = "display_name")
-        String displayName
+        String displayName,
+        String password
 ) { }
