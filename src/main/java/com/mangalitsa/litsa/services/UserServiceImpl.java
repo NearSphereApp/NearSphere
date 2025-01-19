@@ -53,9 +53,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updateInfo(Long id, ChangeUserInfoRequest request) {
+    public void updateInfo(Long id, ChangeUserInfoRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException {
         User user = userRepository.findById(id).orElseThrow();
-        user.setDisplayName(request.displayName());
+        if(request.displayName() != null && !request.displayName().isEmpty()){
+            user.setDisplayName(request.displayName());
+            user.setUpdatedAt(LocalDateTime.now());
+            userRepository.save(user);
+        }
+        if(request.password() != null && !request.password().isEmpty()){
+            String hashedPassword = passwordService.hashPassword(request.password());
+            Password password = passwordRepository.findByUser(user);
+            password.setPasswordHash(hashedPassword);
+            passwordRepository.save(password);
+        }
         user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
     }
