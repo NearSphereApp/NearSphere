@@ -1,6 +1,8 @@
 package com.mangalitsa.litsa.services;
 
+import com.mangalitsa.litsa.controllers.model.ChangeUserInfoRequest;
 import com.mangalitsa.litsa.controllers.model.NewUserRequest;
+import com.mangalitsa.litsa.controllers.model.UserResponse;
 import com.mangalitsa.litsa.model.Password;
 import com.mangalitsa.litsa.model.User;
 import com.mangalitsa.litsa.repositories.PasswordRepository;
@@ -25,6 +27,13 @@ public class UserServiceImpl implements UserService {
     PasswordService passwordService;
 
     @Override
+    public UserResponse getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow();
+        UserResponse response = new UserResponse(user.getId() , user.getEmail() , user.getDisplayName());
+        return response;
+    }
+
+    @Override
     public void signUp(NewUserRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         User user = new User();
@@ -41,5 +50,13 @@ public class UserServiceImpl implements UserService {
         password.setCreatedAt(LocalDateTime.now());
         password.setPasswordHash(hashedPassword);
         passwordRepository.save(password);
+    }
+
+    @Override
+    public void updateInfo(Long id, ChangeUserInfoRequest request) {
+        User user = userRepository.findById(id).orElseThrow();
+        user.setDisplayName(request.displayName());
+        user.setUpdatedAt(LocalDateTime.now());
+        userRepository.save(user);
     }
 }

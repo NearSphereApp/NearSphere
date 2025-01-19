@@ -1,17 +1,17 @@
 package com.mangalitsa.litsa.controllers;
 
-import com.mangalitsa.litsa.controllers.model.AuthResponse;
-import com.mangalitsa.litsa.controllers.model.AuthRequest;
-import com.mangalitsa.litsa.controllers.model.NewUserRequest;
+import com.mangalitsa.litsa.controllers.model.ChangeUserInfoRequest;
 import com.mangalitsa.litsa.controllers.model.UserResponse;
 import com.mangalitsa.litsa.services.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -21,21 +21,15 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public UserResponse getUser() {
-        return null;// TODO
+    public ResponseEntity<UserResponse> getUser(@AuthenticationPrincipal UserDetails userDetails) {
+            String email = userDetails.getUsername();// email for us
+            UserResponse response = userService.getUserByEmail(email);
+        return new ResponseEntity<>(response , HttpStatus.OK);
     }
 
-    @PostMapping("/login")
-    public AuthResponse login(@RequestBody AuthRequest body) {
-        return null; // TODO
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateUserInfo(@PathVariable Long id , @RequestBody ChangeUserInfoRequest request){
+        userService.updateInfo(id , request);
+        return ResponseEntity.ok().build();
     }
-
-    @PostMapping
-    public ResponseEntity<Void> signUp(@RequestBody NewUserRequest request) throws NoSuchAlgorithmException, InvalidKeySpecException {
-        userService.signUp(request);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
-
-    // TODO: PATCH /{field}
-    //       maybe also PUT?
 }
