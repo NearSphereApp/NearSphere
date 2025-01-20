@@ -1,12 +1,13 @@
 package com.mangalitsa.litsa.services;
 
-import com.mangalitsa.litsa.model.Favourites;
+import com.mangalitsa.litsa.controllers.model.FavouritesRequest;
+import com.mangalitsa.litsa.controllers.model.FavouritesResponse;
+
 
 import java.util.List;
-import java.util.Optional;
 
 public interface FavouritesService {
-    List<Favourites> getAllFavourites();
-    void addFavourite(Favourites favouriteRequest);
-    Optional<Favourites> deleteFavourite(String id);
+    List<FavouritesResponse> getAllFavourites(long userId);
+    void addFavourite(long userId, FavouritesRequest favourite);
+    void deleteFavourite(long userId, long placeId);
 }

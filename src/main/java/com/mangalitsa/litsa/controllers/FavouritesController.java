@@ -1,6 +1,7 @@
 package com.mangalitsa.litsa.controllers;
 
-import com.mangalitsa.litsa.model.Favourites;
+import com.mangalitsa.litsa.controllers.model.FavouritesRequest;
+import com.mangalitsa.litsa.controllers.model.FavouritesResponse;
 import com.mangalitsa.litsa.services.FavouritesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,9 @@ public class FavouritesController {
         this.favouritesService = favouritesService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Favourites>> getFavourites() {
-        List<Favourites> favourites = favouritesService.getAllFavourites();
+    @GetMapping("/{user_id}")
+    public ResponseEntity<List<FavouritesResponse>> getFavourites(@PathVariable long user_id) {
+        List<FavouritesResponse> favourites = favouritesService.getAllFavourites(user_id);
         if (favourites.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
@@ -31,17 +32,17 @@ public class FavouritesController {
     }
 
 
-    @PostMapping
+    @PostMapping("/{user_id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public HttpStatus addFavourite(@RequestBody Favourites body) {
-        favouritesService.addFavourite(body);
+    public HttpStatus addFavourite(@PathVariable long user_id, @RequestBody FavouritesRequest body) {
+        favouritesService.addFavourite(user_id, body);
         return HttpStatus.CREATED;
 
     }
 
-    @DeleteMapping("/{id}")
-    public HttpStatus deleteFavourite(@PathVariable String id) {
-        favouritesService.deleteFavourite(id);
+    @DeleteMapping("/{user_id}/{place_id}")
+    public HttpStatus deleteFavourite(@PathVariable long user_id, @PathVariable long place_id) {
+        favouritesService.deleteFavourite(user_id, place_id);
         return HttpStatus.NO_CONTENT;
     }
 
