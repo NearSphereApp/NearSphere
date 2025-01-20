@@ -6,6 +6,7 @@ import com.mangalitsa.litsa.model.Favourites;
 import com.mangalitsa.litsa.repositories.FavouritesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -51,6 +52,7 @@ public class FavouritesServiceImpl implements FavouritesService {
     }
 
     @Override
+    @Transactional
     public void deleteFavourite(long userId, long placeId) {
         favouritesRepository.deleteByUserIdAndId(userId, placeId);
     }
