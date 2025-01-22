@@ -369,7 +369,6 @@ id, user_id, displayName, photoLink, formattedAddress, website, priceLevel, type
 ## Further Enhancements
 - Containerization: Create a Dockerfile and containerize the Spring Boot app.
 - Unit and Integration Tests: Expand coverage for services and controllers.
-- Validation: Add stronger validation on incoming requests (e.g., using javax.validation).
-- Logging/Monitoring: Integrate with log aggregators and monitoring solutions (e.g. ELK stack).
-
+- Validation: Add stronger validation on incoming requests.
+  
 <hr></hr>
