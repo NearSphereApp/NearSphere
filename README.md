@@ -157,6 +157,7 @@ src/main/java/com/mangalitsa/litsa
 - **JWT** (JSON Web Token) for authentication
 - **WebClient** for external API calls (Google Places)
 - **Spring Mail** for password reset emails
+- **PostgreSQL** 
 
 
 
@@ -172,7 +173,7 @@ src/main/java/com/mangalitsa/litsa
 
 ### Environment Variables
 
-In your `application.properties` (or `.yml`), you need to define:
+In your `application.properties`  you need to define:
 ```
 security.jwt.secret-key: # A Base64-encoded secret for JWT 
 security.jwt.expiration-time: # JWT token expiration in milliseconds 
