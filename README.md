@@ -188,7 +188,7 @@ Note: Keep your API keys and secrets out of version control, e.g., store them in
 git clone [https://github.com/NearSphereApp/NearSphere.git]
 cd NearSphere
 ``` 
-2.	**Configure your environment** (properties or YAML) to include the necessary variables described above.
+2.	**Configure your environment** properties to include the necessary variables described above.
 3.	**Install dependencies using Maven**:
 ```
 mvn clean install
